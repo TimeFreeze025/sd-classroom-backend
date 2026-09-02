@@ -5,3 +5,6 @@ INSERT INTO subjects (department_id, code, name, description)
 VALUES
 (1, 'ECE101', 'Data Structures', 'Algorithms, Lists, and more'),
 (1, 'ECE101', 'Signals', 'Analysis of EC Signals')
+
+
+TEST
