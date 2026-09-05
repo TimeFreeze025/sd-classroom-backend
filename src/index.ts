@@ -1,5 +1,6 @@
 import express from "express";
 import subjectsRouter from "./routes/subjects.ts";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -26,10 +27,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
-function cors(arg0: {
-  origin: string | undefined;
-  methods: string[];
-  credentials: boolean;
-}): any {
-  throw new Error("Function not implemented.");
-}
