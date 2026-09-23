@@ -21,9 +21,40 @@ app.use(
   }),
 );
 
-app.all("/api/auth/*splat", toNodeHandler(auth));
-
 app.use(express.json());
+
+// app.all("/api/auth/*splat", toNodeHandler(auth));
+app.all("/api/auth/*splat", async (req, res) => {
+  try {
+    const url = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(req.headers)) {
+      if (value)
+        headers.set(key, Array.isArray(value) ? value.join(", ") : value);
+    }
+
+    const isBodyless = ["GET", "HEAD"].includes(req.method);
+
+    const init: RequestInit = {
+      method: req.method,
+      headers,
+      ...(isBodyless ? {} : { body: JSON.stringify(req.body) }),
+    };
+
+    const request = new Request(url, init);
+
+    const response = await auth.handler(request);
+
+    res.status(response.status);
+    response.headers.forEach((value, key) => res.setHeader(key, value));
+    const text = await response.text();
+    res.send(text);
+  } catch (err) {
+    console.error("Auth handler error:", err);
+    res.status(500).json({ error: "Internal auth error" });
+  }
+});
 
 app.use("/api/subjects", requireRole("teacher", "admin"), subjectsRouter);
 // app.use("/api/subjects", subjectsRouter);
