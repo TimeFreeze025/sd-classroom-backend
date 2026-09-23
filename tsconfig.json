@@ -49,5 +49,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src"]
+  "include": ["src", "src/lib/cloudinary.ts"]
 }
