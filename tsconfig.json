@@ -13,7 +13,7 @@
     // "types": [],
     // For nodejs:
     "lib": ["esnext"],
-    "types": ["node"],
+    "types": ["node", "@cloudflare/workers-types"],
     // and npm install -D @types/node
 
     // Other Outputs
@@ -49,5 +49,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src", "src/lib/cloudinary.ts"]
+  "include": ["src", "src/lib/cloudinary.ts", "worker-configuration.d.ts"]
 }
